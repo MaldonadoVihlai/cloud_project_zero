@@ -15,7 +15,7 @@ class EventModel(db.Model):
     __tablename__ = "events"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128), unique=True, nullable=False)
+    name = db.Column(db.String(128), unique=False, nullable=False)
     category = db.Column(Enum(Category), unique=False, nullable=True)
     place = db.Column(db.String(64), unique=False, nullable=True)
     address = db.Column(db.String(256), unique=False, nullable=True)

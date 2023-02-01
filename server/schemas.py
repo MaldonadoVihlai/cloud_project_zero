@@ -5,8 +5,6 @@ class User_Schema(Schema):
     class Meta:
         fields = ("id", "email", "password", "events")
 
-# post_schema = Publicacion_Schema()
-
 
 class Event_Schema(Schema):
     class Meta:

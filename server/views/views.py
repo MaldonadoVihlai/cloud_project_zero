@@ -9,7 +9,7 @@ from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
 user_schema = UserSchema()
 event_schema = EventSchema()
 
-class ViewSignIn(Resource):
+class ViewSignUp(Resource):
     
     def post(self):
         new_user = UserModel(email=request.json["email"], password=generate_password_hash(request.json["password"], method='sha256'))
@@ -87,9 +87,12 @@ class ViewAEventsUser(Resource):
                                 address=request.json["address"], start_date=request.json["start_date"], end_date=request.json["end_date"], 
                                 virtual=request.json["virtual"])
         user = UserModel.query.get_or_404(id_user)
-        user.events.append(new_event)
-
+        events = [ev for ev in user.events]
+        for event in events:
+            if event.name == request.json["name"]:
+                return 'El usuario ya tiene un evento con dicho nombre',409
         try:
+            user.events.append(new_event)
             db.session.commit()
         except IntegrityError:
             db.session.rollback()
