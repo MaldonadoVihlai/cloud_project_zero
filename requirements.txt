@@ -7,3 +7,4 @@ flask-cors
 flask_jwt_extended
 marshmallow_sqlalchemy
 mysqlclient
+gevent

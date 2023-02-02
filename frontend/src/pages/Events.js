@@ -139,6 +139,7 @@ export const Events = (props) => {
             alert("Debe iniciar sesión primero")
             navigate("/login")
         }
+        console.log(token)
         user_id = localStorage.getItem('id')
         getEvents();
     }, []);

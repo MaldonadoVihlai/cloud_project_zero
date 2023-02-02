@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const SingOut = () => {
     const navigate = useNavigate();
     localStorage.removeItem('token');
+    localStorage.removeItem('id');
     navigate("/login");
   }
   

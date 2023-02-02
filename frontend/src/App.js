@@ -19,7 +19,7 @@ function App() {
     const newUserId = localStorage.getItem('id')
     if (newUserId && newUserId != "" && newUserId != undefined) setUserId(newUserId)
     if (newToken && newToken != "" && newToken != undefined) setToken(newToken)
-  }, [token]);
+  }, [token, userId]);
   return (
     <Router>
       <Navigbar />
