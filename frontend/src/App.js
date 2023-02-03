@@ -16,10 +16,12 @@ function App() {
   useEffect( ()=>{
     const newToken = localStorage.getItem('token')
     const userId = localStorage.getItem('id')
+    if (newToken && newToken != "" && newToken != undefined) setToken(newToken)
+  }, [token]);
+  useEffect( ()=>{
     const newUserId = localStorage.getItem('id')
     if (newUserId && newUserId != "" && newUserId != undefined) setUserId(newUserId)
-    if (newToken && newToken != "" && newToken != undefined) setToken(newToken)
-  }, [token, userId]);
+  }, [userId]);
   return (
     <Router>
       <Navigbar />

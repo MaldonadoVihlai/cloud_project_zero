@@ -21,9 +21,10 @@ export const Events = (props) => {
 
     let [events, setEvents] = useState([]);
 
-    let token, user_id
-    const props_user_id = props.userId
 
+    const [token, setToken] = useState(localStorage.getItem('token'))
+    let getToken
+    const [userId, setUserId] = useState(localStorage.getItem('id'))
 
 
     const handleSubmit = async (e) => {
@@ -32,11 +33,11 @@ export const Events = (props) => {
             let virtual_bool = (virtual == 'true' || virtual == true || virtual === "")
             let category_selected = (category == '' ? 'Conferencia' : category)
 
-            const res = await fetch(`${API}/user/${props_user_id}/events`, {
+            const res = await fetch(`${API}/user/${userId}/events`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ` + props.token
+                    "Authorization": `Bearer ` + token
                 },
                 body: JSON.stringify({
                     name,
@@ -59,7 +60,7 @@ export const Events = (props) => {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ` + props.token
+                    "Authorization": `Bearer ` + token
                 },
                 body: JSON.stringify({
                     name,
@@ -88,13 +89,8 @@ export const Events = (props) => {
     };
 
     const getEvents = async () => {
-        let user_id_events
-        let token_events
-        user_id_events = (user_id ? user_id : props_user_id)
-        token_events = (token ? token : props.token)
-
-        const res = await fetch(`${API}/user/${user_id_events}/events`, {
-            headers: { "Authorization": `Bearer ${token_events}` }
+        const res = await fetch(`${API}/user/${userId}/events`, {
+            headers: { "Authorization": `Bearer ${token}` }
         });
         const data = await res.json();
         setEvents(data);
@@ -115,7 +111,7 @@ export const Events = (props) => {
 
     const editEvent = async (id) => {
         const res = await fetch(`${API}/event/${id}`, {
-            headers: { "Authorization": 'Bearer ' + props.token }
+            headers: { "Authorization": 'Bearer ' + token }
         });
         const data = await res.json();
 
@@ -134,16 +130,13 @@ export const Events = (props) => {
     };
 
     useEffect(() => {
-        token = localStorage.getItem('token')
-        if (!token) {
+        getToken = localStorage.getItem('token')
+        if (!getToken) {
             alert("Debe iniciar sesión primero")
             navigate("/login")
         }
-        console.log(token)
-        user_id = localStorage.getItem('id')
         getEvents();
     }, []);
-
 
     return (
         <div className="row center">
